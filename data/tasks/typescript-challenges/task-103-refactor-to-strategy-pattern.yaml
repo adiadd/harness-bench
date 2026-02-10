@@ -1,0 +1,71 @@
+id: task-103-refactor-to-strategy-pattern
+suiteId: typescript-challenges
+title: "Refactor pricing calculator to strategy pattern"
+description: |
+  A pricing calculator uses a large switch statement to handle different
+  pricing strategies. Refactor it to use the strategy pattern with
+  separate strategy classes.
+difficulty: hard
+estimatedMinutes: 25
+tags: [typescript, refactor, design-patterns]
+author: harness-bench
+version: "1.0.0"
+
+context:
+  language: typescript
+  files:
+    "src/pricing.ts": |
+      export interface Order {
+        items: Array<{ price: number; quantity: number }>;
+        customerType: 'regular' | 'premium' | 'wholesale';
+        couponCode?: string;
+      }
+
+      export function calculateTotal(order: Order): number {
+        let subtotal = 0;
+        for (const item of order.items) {
+          subtotal += item.price * item.quantity;
+        }
+
+        let discount = 0;
+        switch (order.customerType) {
+          case 'regular':
+            if (subtotal > 100) discount = 0.05;
+            break;
+          case 'premium':
+            discount = 0.15;
+            if (subtotal > 200) discount = 0.20;
+            break;
+          case 'wholesale':
+            discount = 0.25;
+            if (subtotal > 1000) discount = 0.35;
+            break;
+        }
+
+        let total = subtotal * (1 - discount);
+
+        if (order.couponCode === 'SAVE10') {
+          total *= 0.90;
+        } else if (order.couponCode === 'FLAT20') {
+          total -= 20;
+        }
+
+        return Math.max(0, Math.round(total * 100) / 100);
+      }
+
+prompt: |
+  Refactor src/pricing.ts to use the strategy pattern:
+  1. Create a PricingStrategy interface with a calculateDiscount(subtotal: number) method
+  2. Create RegularStrategy, PremiumStrategy, and WholesaleStrategy classes
+  3. Create a CouponApplier that handles coupon logic separately
+  4. The calculateTotal function should use these strategies instead of the switch statement
+  5. Export all strategies and the interface
+  6. The final results must be identical to the original implementation
+
+validation:
+  type: test-suite
+  testCommand: "bun test"
+  testFiles:
+    - "src/pricing.test.ts"
+  maxScore: 100
+  passingScore: 70

@@ -1,0 +1,40 @@
+id: task-201-fix-csv-parser
+suiteId: python-challenges
+title: "Fix CSV parser handling of quoted fields"
+description: |
+  A custom CSV parser incorrectly handles quoted fields that contain
+  commas and newlines. Fix the parser to correctly handle RFC 4180
+  compliant CSV data.
+difficulty: medium
+estimatedMinutes: 15
+tags: [python, parsing, bug-fix]
+author: harness-bench
+version: "1.0.0"
+
+context:
+  language: python
+  files:
+    "csv_parser.py": |
+      def parse_csv(text: str) -> list[list[str]]:
+          """Parse CSV text into a list of rows, each row a list of fields."""
+          rows = []
+          for line in text.strip().split('\n'):
+              fields = line.split(',')
+              rows.append([f.strip() for f in fields])
+          return rows
+
+prompt: |
+  Fix the CSV parser in csv_parser.py to correctly handle:
+  1. Quoted fields containing commas: "hello, world" should be one field
+  2. Quoted fields containing newlines
+  3. Escaped quotes within quoted fields (doubled quotes: "")
+  4. Mixed quoted and unquoted fields in the same row
+  Keep the same function signature: parse_csv(text: str) -> list[list[str]]
+
+validation:
+  type: test-suite
+  testCommand: "python -m pytest test_csv_parser.py -v"
+  testFiles:
+    - "test_csv_parser.py"
+  maxScore: 100
+  passingScore: 80

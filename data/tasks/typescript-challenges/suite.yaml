@@ -1,0 +1,12 @@
+id: typescript-challenges
+name: TypeScript Challenges
+description: Core TypeScript coding challenges covering validation, bug fixes, and refactoring
+category: mixed
+difficulty: medium
+author: harness-bench
+tags: [typescript, nextjs, zod]
+taskIds:
+  - task-101-add-zod-validation
+  - task-102-fix-async-race-condition
+  - task-103-refactor-to-strategy-pattern
+version: "1.0.0"

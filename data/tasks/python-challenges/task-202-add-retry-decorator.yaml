@@ -1,0 +1,38 @@
+id: task-202-add-retry-decorator
+suiteId: python-challenges
+title: "Implement a retry decorator with exponential backoff"
+description: |
+  Create a retry decorator that retries failed function calls with
+  configurable max retries, exponential backoff, and exception filtering.
+difficulty: medium
+estimatedMinutes: 20
+tags: [python, decorators, feature-add]
+author: harness-bench
+version: "1.0.0"
+
+context:
+  language: python
+  files:
+    "retry.py": |
+      # Implement the retry decorator here
+
+      def retry():
+          """A retry decorator - implement me!"""
+          pass
+
+prompt: |
+  Implement a retry decorator in retry.py with these features:
+  1. @retry(max_retries=3) - configurable max retry count
+  2. Exponential backoff: wait 2^attempt seconds between retries (0.1 * 2^attempt for testing)
+  3. @retry(max_retries=3, exceptions=(ValueError,)) - only retry specific exceptions
+  4. Should re-raise the last exception if all retries fail
+  5. Should work with both sync and async functions
+  6. The decorator should preserve the original function's name and docstring (use functools.wraps)
+
+validation:
+  type: test-suite
+  testCommand: "python -m pytest test_retry.py -v"
+  testFiles:
+    - "test_retry.py"
+  maxScore: 100
+  passingScore: 80

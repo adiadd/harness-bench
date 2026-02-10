@@ -1,0 +1,62 @@
+id: task-102-fix-async-race-condition
+suiteId: typescript-challenges
+title: "Fix async race condition in data fetcher"
+description: |
+  A data fetching utility has a race condition where multiple concurrent
+  calls can return stale data. Fix it by implementing request deduplication.
+difficulty: medium
+estimatedMinutes: 20
+tags: [typescript, async, concurrency, bug-fix]
+author: harness-bench
+version: "1.0.0"
+
+context:
+  language: typescript
+  files:
+    "src/fetcher.ts": |
+      type FetchFn<T> = () => Promise<T>;
+
+      export class DataFetcher<T> {
+        private cache: T | null = null;
+        private lastFetchTime = 0;
+        private ttlMs: number;
+
+        constructor(private fetchFn: FetchFn<T>, ttlMs = 5000) {
+          this.ttlMs = ttlMs;
+        }
+
+        async get(): Promise<T> {
+          const now = Date.now();
+          if (this.cache !== null && now - this.lastFetchTime < this.ttlMs) {
+            return this.cache;
+          }
+
+          // BUG: Multiple concurrent calls will all trigger fetches
+          const data = await this.fetchFn();
+          this.cache = data;
+          this.lastFetchTime = Date.now();
+          return data;
+        }
+
+        invalidate(): void {
+          this.cache = null;
+          this.lastFetchTime = 0;
+        }
+      }
+
+prompt: |
+  Fix the race condition in src/fetcher.ts. When multiple calls to get()
+  happen concurrently while the cache is expired, only ONE fetch should
+  actually execute. Subsequent concurrent calls should await the same
+  in-flight promise. The fix should:
+  1. Add a private field to track an in-flight promise
+  2. If a fetch is already in-flight, return the existing promise
+  3. Clear the in-flight promise after the fetch completes (success or failure)
+
+validation:
+  type: test-suite
+  testCommand: "bun test"
+  testFiles:
+    - "src/fetcher.test.ts"
+  maxScore: 100
+  passingScore: 80

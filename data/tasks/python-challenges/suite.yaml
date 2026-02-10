@@ -1,0 +1,11 @@
+id: python-challenges
+name: Python Challenges
+description: Python coding challenges covering bug fixes and feature additions
+category: mixed
+difficulty: medium
+author: harness-bench
+tags: [python]
+taskIds:
+  - task-201-fix-csv-parser
+  - task-202-add-retry-decorator
+version: "1.0.0"

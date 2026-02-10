@@ -1,0 +1,48 @@
+id: task-101-add-zod-validation
+suiteId: typescript-challenges
+title: "Add Zod validation to API routes"
+description: |
+  Add input validation using Zod to a Next.js API route handler.
+  The handler currently accepts any JSON body without validation.
+  You must validate email, age (18-120), and country (2-letter ISO code).
+difficulty: medium
+estimatedMinutes: 15
+tags: [typescript, zod, nextjs, validation]
+author: harness-bench
+version: "1.0.0"
+
+context:
+  language: typescript
+  framework: [nextjs, zod]
+  files:
+    "app/api/users/route.ts": |
+      import { NextRequest, NextResponse } from 'next/server';
+
+      export async function POST(req: NextRequest) {
+        const body = await req.json();
+        return NextResponse.json({ success: true, user: body });
+      }
+    "package.json": |
+      {
+        "dependencies": {
+          "next": "^16.0.0",
+          "zod": "^3.25.0"
+        }
+      }
+
+prompt: |
+  Add Zod validation to the POST handler in app/api/users/route.ts.
+  Validate:
+  - email: must be a valid email address
+  - age: must be a number between 18 and 120
+  - country: must be a 2-letter uppercase ISO country code (regex: /^[A-Z]{2}$/)
+  Return 400 with { success: false, errors: zodError.flatten().fieldErrors } if validation fails.
+  Return 200 with { success: true, user: validatedData } if valid.
+
+validation:
+  type: test-suite
+  testCommand: "bun test"
+  testFiles:
+    - "app/api/users/route.test.ts"
+  maxScore: 100
+  passingScore: 80

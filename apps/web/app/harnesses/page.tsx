@@ -1,8 +1,8 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr"
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
-import { Badge } from "@workspace/ui/components/badge"
+import { Badge } from "@workspace/ui/components/badge";
 import {
   Card,
   CardContent,
@@ -10,9 +10,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@workspace/ui/components/card"
+} from "@workspace/ui/components/card";
 
-import { mockHarnesses } from "@/lib/mock-data"
+import { mockHarnesses } from "@/lib/mock-data";
 
 export default function HarnessesPage() {
   return (
@@ -56,5 +56,5 @@ export default function HarnessesPage() {
         ))}
       </div>
     </main>
-  )
+  );
 }

@@ -1,30 +1,33 @@
-import Link from "next/link"
-
-import { ArrowRight, ChartBar, CurrencyDollar, Lightning, Trophy } from "@phosphor-icons/react/dist/ssr"
+import Link from "next/link";
 
 import {
-  Card,
-  CardContent,
-} from "@workspace/ui/components/card"
+  ArrowRight,
+  ChartBar,
+  CurrencyDollar,
+  Lightning,
+  Trophy,
+} from "@phosphor-icons/react/dist/ssr";
 
-import { mockLeaderboard, mockRuns } from "@/lib/mock-data"
-import { MetricCard } from "@/components/metric-card"
-import { ScoreBadge } from "@/components/score-badge"
-import { HarnessChip } from "@/components/harness-chip"
+import { Card, CardContent } from "@workspace/ui/components/card";
+
+import { mockLeaderboard, mockRuns } from "@/lib/mock-data";
+import { MetricCard } from "@/components/metric-card";
+import { ScoreBadge } from "@/components/score-badge";
+import { HarnessChip } from "@/components/harness-chip";
 
 export default function DashboardPage() {
-  const totalRuns = mockRuns.length
+  const totalRuns = mockRuns.length;
   const avgScore =
     mockLeaderboard.reduce((sum, entry) => sum + entry.score, 0) /
-    mockLeaderboard.length
+    mockLeaderboard.length;
   const avgCost =
     mockLeaderboard.reduce((sum, entry) => sum + entry.avgCost, 0) /
-    mockLeaderboard.length
+    mockLeaderboard.length;
   const passRate =
     mockLeaderboard.reduce((sum, entry) => sum + entry.passRate, 0) /
-    mockLeaderboard.length
+    mockLeaderboard.length;
 
-  const sorted = [...mockLeaderboard].sort((a, b) => b.score - a.score)
+  const sorted = [...mockLeaderboard].sort((a, b) => b.score - a.score);
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
@@ -113,5 +116,5 @@ export default function DashboardPage() {
         </Card>
       </div>
     </main>
-  )
+  );
 }

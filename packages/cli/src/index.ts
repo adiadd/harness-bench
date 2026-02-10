@@ -1,36 +1,36 @@
 #!/usr/bin/env bun
 
-import { parseArgs } from "node:util"
+import { parseArgs } from "node:util";
 
 const { positionals } = parseArgs({
   args: process.argv.slice(2),
   allowPositionals: true,
   strict: false,
-})
+});
 
-const command = positionals[0]
+const command = positionals[0];
 
 switch (command) {
   case "run":
-    await import("./commands/run.js").then((m) => m.run())
-    break
+    await import("./commands/run.js").then((m) => m.run());
+    break;
   case "list-harnesses":
-    await import("./commands/list-harnesses.js").then((m) => m.listHarnesses())
-    break
+    await import("./commands/list-harnesses.js").then((m) => m.listHarnesses());
+    break;
   case "list-tasks":
-    await import("./commands/list-tasks.js").then((m) => m.listTasks())
-    break
+    await import("./commands/list-tasks.js").then((m) => m.listTasks());
+    break;
   case "results":
-    await import("./commands/results.js").then((m) => m.results())
-    break
+    await import("./commands/results.js").then((m) => m.results());
+    break;
   case "help":
   case undefined:
-    printHelp()
-    break
+    printHelp();
+    break;
   default:
-    console.error(`Unknown command: ${command}`)
-    printHelp()
-    process.exit(1)
+    console.error(`Unknown command: ${command}`);
+    printHelp();
+    process.exit(1);
 }
 
 function printHelp() {
@@ -56,5 +56,5 @@ Results options:
   --last <n>        Show last N results (default: 10)
   --harness <id>    Filter by harness
   --model <id>      Filter by model
-`)
+`);
 }

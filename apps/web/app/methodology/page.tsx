@@ -1,19 +1,19 @@
-import { Badge } from "@workspace/ui/components/badge"
+import { Badge } from "@workspace/ui/components/badge";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from "@workspace/ui/components/card"
-import { Separator } from "@workspace/ui/components/separator"
+} from "@workspace/ui/components/card";
+import { Separator } from "@workspace/ui/components/separator";
 import {
   Exam,
   ChartBar,
   Function,
   Desktop,
   Scales,
-} from "@phosphor-icons/react/dist/ssr"
+} from "@phosphor-icons/react/dist/ssr";
 
 export default function MethodologyPage() {
   return (
@@ -231,15 +231,15 @@ export default function MethodologyPage() {
         </CardContent>
       </Card>
     </main>
-  )
+  );
 }
 
 function ScoringMethod({
   label,
   description,
 }: {
-  label: string
-  description: string
+  label: string;
+  description: string;
 }) {
   return (
     <div className="bg-muted/50 rounded-lg border p-3">
@@ -248,7 +248,7 @@ function ScoringMethod({
         {description}
       </p>
     </div>
-  )
+  );
 }
 
 function MetricItem({ name, detail }: { name: string; detail: string }) {
@@ -257,5 +257,5 @@ function MetricItem({ name, detail }: { name: string; detail: string }) {
       <p className="mb-1 text-sm font-medium">{name}</p>
       <p className="text-muted-foreground text-xs leading-relaxed">{detail}</p>
     </div>
-  )
+  );
 }

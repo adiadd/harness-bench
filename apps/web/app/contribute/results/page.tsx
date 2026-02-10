@@ -1,17 +1,17 @@
-import { Badge } from "@workspace/ui/components/badge"
+import { Badge } from "@workspace/ui/components/badge";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from "@workspace/ui/components/card"
-import { Separator } from "@workspace/ui/components/separator"
+} from "@workspace/ui/components/card";
+import { Separator } from "@workspace/ui/components/separator";
 import {
   Terminal,
   FileJs,
   GitPullRequest,
-} from "@phosphor-icons/react/dist/ssr"
+} from "@phosphor-icons/react/dist/ssr";
 
 export default function SubmitResultsPage() {
   return (
@@ -193,9 +193,9 @@ harness-bench run \\
               to verify the file passes schema validation and integrity checks.
             </li>
             <li>
-              Open a pull request. Automated CI will re-validate the JSON,
-              check for duplicate submissions, and verify that the referenced
-              tasks exist in the task registry.
+              Open a pull request. Automated CI will re-validate the JSON, check
+              for duplicate submissions, and verify that the referenced tasks
+              exist in the task registry.
             </li>
             <li>
               Once merged, your results will appear on the dashboard within a
@@ -206,5 +206,5 @@ harness-bench run \\
         </CardContent>
       </Card>
     </main>
-  )
+  );
 }

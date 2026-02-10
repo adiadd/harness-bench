@@ -1,8 +1,8 @@
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import { Badge } from "@workspace/ui/components/badge"
-import { Card, CardContent } from "@workspace/ui/components/card"
-import { Separator } from "@workspace/ui/components/separator"
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { Badge } from "@workspace/ui/components/badge";
+import { Card, CardContent } from "@workspace/ui/components/card";
+import { Separator } from "@workspace/ui/components/separator";
 import {
   ArrowLeft,
   Trophy,
@@ -11,14 +11,19 @@ import {
   ChatCircleText,
   Wrench,
   ArrowsCounterClockwise,
-} from "@phosphor-icons/react/dist/ssr"
-import { mockRuns, mockTasks, mockHarnesses, mockModels } from "@/lib/mock-data"
-import { MetricCard } from "@/components/metric-card"
-import { ScoreBadge } from "@/components/score-badge"
+} from "@phosphor-icons/react/dist/ssr";
+import {
+  mockRuns,
+  mockTasks,
+  mockHarnesses,
+  mockModels,
+} from "@/lib/mock-data";
+import { MetricCard } from "@/components/metric-card";
+import { ScoreBadge } from "@/components/score-badge";
 
 interface TranscriptMessage {
-  role: "user" | "assistant" | "tool"
-  content: string
+  role: "user" | "assistant" | "tool";
+  content: string;
 }
 
 const mockTranscript: TranscriptMessage[] = [
@@ -35,7 +40,7 @@ const mockTranscript: TranscriptMessage[] = [
   {
     role: "tool",
     content:
-      'read_file: src/utils.ts\n\nexport function parseConfig(raw: string): Config {\n  const parsed = JSON.parse(raw)\n  return parsed as Config\n}',
+      "read_file: src/utils.ts\n\nexport function parseConfig(raw: string): Config {\n  const parsed = JSON.parse(raw)\n  return parsed as Config\n}",
   },
   {
     role: "assistant",
@@ -52,7 +57,7 @@ const mockTranscript: TranscriptMessage[] = [
     content:
       "The fix is applied. The `parseConfig` function now checks for empty or whitespace-only strings and returns a default config object. The test should pass now.",
   },
-]
+];
 
 const mockDiff = `diff --git a/src/utils.ts b/src/utils.ts
 index 3a4b2c1..8f9d0e2 100644
@@ -65,7 +70,7 @@ index 3a4b2c1..8f9d0e2 100644
 +  }
    const parsed = JSON.parse(raw)
    return parsed as Config
- }`
+ }`;
 
 const roleMeta: Record<
   string,
@@ -89,13 +94,13 @@ const roleMeta: Record<
     textClass: "text-amber-800 dark:text-amber-200",
     align: "self-start",
   },
-}
+};
 
 function TranscriptViewer({ messages }: { messages: TranscriptMessage[] }) {
   return (
     <div className="flex flex-col gap-3">
       {messages.map((msg, i) => {
-        const meta = roleMeta[msg.role]!
+        const meta = roleMeta[msg.role]!;
         return (
           <div
             key={i}
@@ -110,28 +115,28 @@ function TranscriptViewer({ messages }: { messages: TranscriptMessage[] }) {
               {msg.content}
             </div>
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 export default async function RunDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = await params
-  const run = mockRuns.find((r) => r.id === id)
+  const { id } = await params;
+  const run = mockRuns.find((r) => r.id === id);
 
   if (!run) {
-    notFound()
+    notFound();
   }
 
-  const task = mockTasks.find((t) => t.id === run.taskId)
-  const harness = mockHarnesses.find((h) => h.id === run.harnessId)
-  const model = mockModels.find((m) => m.id === run.modelId)
-  const metrics = run.result?.metrics
+  const task = mockTasks.find((t) => t.id === run.taskId);
+  const harness = mockHarnesses.find((h) => h.id === run.harnessId);
+  const model = mockModels.find((m) => m.id === run.modelId);
+  const metrics = run.result?.metrics;
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10 space-y-8">
@@ -167,9 +172,7 @@ export default async function RunDetailPage({
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
         <MetricCard
           label="Score"
-          value={
-            <ScoreBadge score={run.result?.score ?? 0} />
-          }
+          value={<ScoreBadge score={run.result?.score ?? 0} />}
           icon={<Trophy className="size-4" />}
         />
         <MetricCard
@@ -233,5 +236,5 @@ export default async function RunDetailPage({
         </Card>
       </div>
     </main>
-  )
+  );
 }

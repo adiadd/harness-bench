@@ -1,25 +1,22 @@
-import { ChartBar } from "@phosphor-icons/react/dist/ssr"
+import { ChartBar } from "@phosphor-icons/react/dist/ssr";
 
-import { Badge } from "@workspace/ui/components/badge"
-import {
-  Card,
-  CardContent,
-} from "@workspace/ui/components/card"
+import { Badge } from "@workspace/ui/components/badge";
+import { Card, CardContent } from "@workspace/ui/components/card";
 
-import { mockHarnesses, mockLeaderboard } from "@/lib/mock-data"
-import { ScoreBadge } from "@/components/score-badge"
+import { mockHarnesses, mockLeaderboard } from "@/lib/mock-data";
+import { ScoreBadge } from "@/components/score-badge";
 
 export default function CompareHarnessesPage() {
-  const harnessNames = [...new Set(mockLeaderboard.map((e) => e.harness))]
+  const harnessNames = [...new Set(mockLeaderboard.map((e) => e.harness))];
 
   const harnessStats = harnessNames.map((name) => {
-    const entries = mockLeaderboard.filter((e) => e.harness === name)
-    const harness = mockHarnesses.find((h) => h.name === name)
-    const avgScore = entries.reduce((s, e) => s + e.score, 0) / entries.length
+    const entries = mockLeaderboard.filter((e) => e.harness === name);
+    const harness = mockHarnesses.find((h) => h.name === name);
+    const avgScore = entries.reduce((s, e) => s + e.score, 0) / entries.length;
     const avgPassRate =
-      entries.reduce((s, e) => s + e.passRate, 0) / entries.length
-    const avgCost = entries.reduce((s, e) => s + e.avgCost, 0) / entries.length
-    const totalRuns = entries.reduce((s, e) => s + e.runs, 0)
+      entries.reduce((s, e) => s + e.passRate, 0) / entries.length;
+    const avgCost = entries.reduce((s, e) => s + e.avgCost, 0) / entries.length;
+    const totalRuns = entries.reduce((s, e) => s + e.runs, 0);
 
     return {
       name,
@@ -28,8 +25,8 @@ export default function CompareHarnessesPage() {
       avgCost,
       totalRuns,
       capabilities: harness?.capabilities ?? [],
-    }
-  })
+    };
+  });
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
@@ -98,7 +95,11 @@ export default function CompareHarnessesPage() {
                     <td key={h.name} className="px-4 py-3">
                       <div className="flex flex-wrap gap-1">
                         {h.capabilities.map((cap) => (
-                          <Badge key={cap} variant="secondary" className="text-xs">
+                          <Badge
+                            key={cap}
+                            variant="secondary"
+                            className="text-xs"
+                          >
                             {cap}
                           </Badge>
                         ))}
@@ -112,5 +113,5 @@ export default function CompareHarnessesPage() {
         </CardContent>
       </Card>
     </main>
-  )
+  );
 }

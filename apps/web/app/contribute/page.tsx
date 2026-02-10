@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 
 import {
   Card,
@@ -6,9 +6,9 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "@workspace/ui/components/card"
-import { Separator } from "@workspace/ui/components/separator"
-import { ListChecks, Upload, ArrowRight } from "@phosphor-icons/react/dist/ssr"
+} from "@workspace/ui/components/card";
+import { Separator } from "@workspace/ui/components/separator";
+import { ListChecks, Upload, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 
 export default function ContributePage() {
   return (
@@ -85,5 +85,5 @@ export default function ContributePage() {
         </Link>
       </div>
     </main>
-  )
+  );
 }

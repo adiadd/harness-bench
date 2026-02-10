@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const HarnessCapabilitiesSchema = z.object({
   streaming: z.boolean(),
@@ -6,7 +6,7 @@ export const HarnessCapabilitiesSchema = z.object({
   codeExecution: z.boolean(),
   webSearch: z.boolean(),
   shellAccess: z.boolean(),
-})
+});
 
 export const HarnessSchema = z.object({
   id: z.string(),
@@ -18,7 +18,7 @@ export const HarnessSchema = z.object({
   homepage: z.string().url().optional(),
   repository: z.string().url().optional(),
   capabilities: HarnessCapabilitiesSchema,
-})
+});
 
-export type Harness = z.infer<typeof HarnessSchema>
-export type HarnessCapabilities = z.infer<typeof HarnessCapabilitiesSchema>
+export type Harness = z.infer<typeof HarnessSchema>;
+export type HarnessCapabilities = z.infer<typeof HarnessCapabilitiesSchema>;

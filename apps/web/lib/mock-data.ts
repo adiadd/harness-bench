@@ -1,82 +1,82 @@
 export type Harness = {
-  id: string
-  slug: string
-  name: string
-  provider: string
-  capabilities: string[]
-  description: string
-}
+  id: string;
+  slug: string;
+  name: string;
+  provider: string;
+  capabilities: string[];
+  description: string;
+};
 
 export type Model = {
-  id: string
-  name: string
-  provider: string
-  inputPricePerMTok: number
-  outputPricePerMTok: number
-}
+  id: string;
+  name: string;
+  provider: string;
+  inputPricePerMTok: number;
+  outputPricePerMTok: number;
+};
 
 export type LeaderboardEntry = {
-  harness: string
-  model: string
-  score: number
-  passRate: number
-  avgCost: number
-  runs: number
-}
+  harness: string;
+  model: string;
+  score: number;
+  passRate: number;
+  avgCost: number;
+  runs: number;
+};
 
 export type RunMetrics = {
-  costUsd: number
-  wallClockMs: number
-  tokensInput: number
-  tokensOutput: number
-  toolCalls: number
-  turns: number
-}
+  costUsd: number;
+  wallClockMs: number;
+  tokensInput: number;
+  tokensOutput: number;
+  toolCalls: number;
+  turns: number;
+};
 
 export type RunResult = {
-  score: number
-  passed: boolean
-  metrics: RunMetrics
-}
+  score: number;
+  passed: boolean;
+  metrics: RunMetrics;
+};
 
 export type Run = {
-  id: string
-  harnessId: string
-  modelId: string
-  taskId: string
-  harness: string
-  model: string
-  task: string
-  score: number
-  cost: number
-  duration: number
-  status: "passed" | "failed" | "error"
-  result: RunResult
-  createdAt: string
-}
+  id: string;
+  harnessId: string;
+  modelId: string;
+  taskId: string;
+  harness: string;
+  model: string;
+  task: string;
+  score: number;
+  cost: number;
+  duration: number;
+  status: "passed" | "failed" | "error";
+  result: RunResult;
+  createdAt: string;
+};
 
 export type TaskContext = {
-  language: string
-  framework?: string
-  files?: string[]
-}
+  language: string;
+  framework?: string;
+  files?: string[];
+};
 
 export type TaskValidation = {
-  type: string
-  testCommand?: string
-  passingScore?: number
-}
+  type: string;
+  testCommand?: string;
+  passingScore?: number;
+};
 
 export type Task = {
-  id: string
-  suiteId: string
-  title: string
-  difficulty: "easy" | "medium" | "hard"
-  description: string
-  context: TaskContext
-  validation: TaskValidation
-  tags: string[]
-}
+  id: string;
+  suiteId: string;
+  title: string;
+  difficulty: "easy" | "medium" | "hard";
+  description: string;
+  context: TaskContext;
+  validation: TaskValidation;
+  tags: string[];
+};
 
 export const mockHarnesses: Harness[] = [
   {
@@ -103,7 +103,7 @@ export const mockHarnesses: Harness[] = [
     capabilities: ["file-editing", "terminal", "spec-driven"],
     description: "Spec-driven AI IDE with structured development workflows",
   },
-]
+];
 
 export const mockModels: Model[] = [
   {
@@ -127,7 +127,7 @@ export const mockModels: Model[] = [
     inputPricePerMTok: 2.5,
     outputPricePerMTok: 10,
   },
-]
+];
 
 export const mockLeaderboard: LeaderboardEntry[] = [
   {
@@ -178,7 +178,7 @@ export const mockLeaderboard: LeaderboardEntry[] = [
     avgCost: 0.25,
     runs: 100,
   },
-]
+];
 
 export const mockRuns: Run[] = [
   {
@@ -196,7 +196,14 @@ export const mockRuns: Run[] = [
     result: {
       score: 100,
       passed: true,
-      metrics: { costUsd: 0.9234, wallClockMs: 42300, tokensInput: 12400, tokensOutput: 3200, toolCalls: 4, turns: 3 },
+      metrics: {
+        costUsd: 0.9234,
+        wallClockMs: 42300,
+        tokensInput: 12400,
+        tokensOutput: 3200,
+        toolCalls: 4,
+        turns: 3,
+      },
     },
     createdAt: "2026-02-08T14:23:00Z",
   },
@@ -215,7 +222,14 @@ export const mockRuns: Run[] = [
     result: {
       score: 85,
       passed: true,
-      metrics: { costUsd: 0.2812, wallClockMs: 36100, tokensInput: 9800, tokensOutput: 2600, toolCalls: 3, turns: 2 },
+      metrics: {
+        costUsd: 0.2812,
+        wallClockMs: 36100,
+        tokensInput: 9800,
+        tokensOutput: 2600,
+        toolCalls: 3,
+        turns: 2,
+      },
     },
     createdAt: "2026-02-08T14:45:00Z",
   },
@@ -234,7 +248,14 @@ export const mockRuns: Run[] = [
     result: {
       score: 35,
       passed: false,
-      metrics: { costUsd: 1.0423, wallClockMs: 58200, tokensInput: 15600, tokensOutput: 4100, toolCalls: 6, turns: 5 },
+      metrics: {
+        costUsd: 1.0423,
+        wallClockMs: 58200,
+        tokensInput: 15600,
+        tokensOutput: 4100,
+        toolCalls: 6,
+        turns: 5,
+      },
     },
     createdAt: "2026-02-08T15:02:00Z",
   },
@@ -253,7 +274,14 @@ export const mockRuns: Run[] = [
     result: {
       score: 72,
       passed: true,
-      metrics: { costUsd: 0.3102, wallClockMs: 29800, tokensInput: 8200, tokensOutput: 2100, toolCalls: 3, turns: 2 },
+      metrics: {
+        costUsd: 0.3102,
+        wallClockMs: 29800,
+        tokensInput: 8200,
+        tokensOutput: 2100,
+        toolCalls: 3,
+        turns: 2,
+      },
     },
     createdAt: "2026-02-08T15:18:00Z",
   },
@@ -272,11 +300,18 @@ export const mockRuns: Run[] = [
     result: {
       score: 40,
       passed: false,
-      metrics: { costUsd: 0.7801, wallClockMs: 51400, tokensInput: 18200, tokensOutput: 5800, toolCalls: 8, turns: 6 },
+      metrics: {
+        costUsd: 0.7801,
+        wallClockMs: 51400,
+        tokensInput: 18200,
+        tokensOutput: 5800,
+        toolCalls: 8,
+        turns: 6,
+      },
     },
     createdAt: "2026-02-08T15:35:00Z",
   },
-]
+];
 
 export const mockTasks: Task[] = [
   {
@@ -284,9 +319,14 @@ export const mockTasks: Task[] = [
     suiteId: "typescript-challenges",
     title: "Implement Generic Pick",
     difficulty: "easy",
-    description: "Implement a type-level Pick utility without using the built-in Pick generic",
+    description:
+      "Implement a type-level Pick utility without using the built-in Pick generic",
     context: { language: "typescript", files: ["pick.ts", "pick.test.ts"] },
-    validation: { type: "test-runner", testCommand: "bun test", passingScore: 80 },
+    validation: {
+      type: "test-runner",
+      testCommand: "bun test",
+      passingScore: 80,
+    },
     tags: ["generics", "utility-types"],
   },
   {
@@ -294,9 +334,17 @@ export const mockTasks: Task[] = [
     suiteId: "typescript-challenges",
     title: "Deep Readonly",
     difficulty: "medium",
-    description: "Implement a generic DeepReadonly that makes all properties of an object readonly recursively",
-    context: { language: "typescript", files: ["deep-readonly.ts", "deep-readonly.test.ts"] },
-    validation: { type: "test-runner", testCommand: "bun test", passingScore: 80 },
+    description:
+      "Implement a generic DeepReadonly that makes all properties of an object readonly recursively",
+    context: {
+      language: "typescript",
+      files: ["deep-readonly.ts", "deep-readonly.test.ts"],
+    },
+    validation: {
+      type: "test-runner",
+      testCommand: "bun test",
+      passingScore: 80,
+    },
     tags: ["generics", "recursion"],
   },
   {
@@ -304,9 +352,18 @@ export const mockTasks: Task[] = [
     suiteId: "typescript-challenges",
     title: "Runtime Type Guard",
     difficulty: "hard",
-    description: "Create a type-safe runtime validator that infers TypeScript types from a schema definition",
-    context: { language: "typescript", framework: "zod-like", files: ["validator.ts", "validator.test.ts"] },
-    validation: { type: "test-runner", testCommand: "bun test", passingScore: 90 },
+    description:
+      "Create a type-safe runtime validator that infers TypeScript types from a schema definition",
+    context: {
+      language: "typescript",
+      framework: "zod-like",
+      files: ["validator.ts", "validator.test.ts"],
+    },
+    validation: {
+      type: "test-runner",
+      testCommand: "bun test",
+      passingScore: 90,
+    },
     tags: ["type-guards", "inference", "runtime"],
   },
   {
@@ -314,9 +371,18 @@ export const mockTasks: Task[] = [
     suiteId: "python-challenges",
     title: "Async Task Queue",
     difficulty: "medium",
-    description: "Implement an async task queue with concurrency limits and priority ordering",
-    context: { language: "python", framework: "asyncio", files: ["queue.py", "test_queue.py"] },
-    validation: { type: "test-runner", testCommand: "pytest", passingScore: 80 },
+    description:
+      "Implement an async task queue with concurrency limits and priority ordering",
+    context: {
+      language: "python",
+      framework: "asyncio",
+      files: ["queue.py", "test_queue.py"],
+    },
+    validation: {
+      type: "test-runner",
+      testCommand: "pytest",
+      passingScore: 80,
+    },
     tags: ["async", "concurrency"],
   },
   {
@@ -324,9 +390,14 @@ export const mockTasks: Task[] = [
     suiteId: "python-challenges",
     title: "Retry Decorator",
     difficulty: "easy",
-    description: "Create a configurable retry decorator with exponential backoff and jitter",
+    description:
+      "Create a configurable retry decorator with exponential backoff and jitter",
     context: { language: "python", files: ["retry.py", "test_retry.py"] },
-    validation: { type: "test-runner", testCommand: "pytest", passingScore: 80 },
+    validation: {
+      type: "test-runner",
+      testCommand: "pytest",
+      passingScore: 80,
+    },
     tags: ["decorators", "error-handling"],
   },
-]
+];

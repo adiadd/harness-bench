@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const ResultMetricsSchema = z.object({
   tokensInput: z.number(),
@@ -18,7 +18,7 @@ export const ResultMetricsSchema = z.object({
   linesAdded: z.number().optional(),
   linesRemoved: z.number().optional(),
   diffSize: z.number().optional(),
-})
+});
 
 export const ResultValidationSchema = z
   .object({
@@ -28,14 +28,14 @@ export const ResultValidationSchema = z
     testsPassed: z.number().optional(),
     testsFailed: z.number().optional(),
   })
-  .optional()
+  .optional();
 
 export const ResultErrorSchema = z
   .object({
     type: z.string(),
     message: z.string(),
   })
-  .optional()
+  .optional();
 
 export const ResultSchema = z.object({
   runId: z.string().uuid(),
@@ -44,7 +44,7 @@ export const ResultSchema = z.object({
   metrics: ResultMetricsSchema,
   validation: ResultValidationSchema,
   error: ResultErrorSchema,
-})
+});
 
-export type Result = z.infer<typeof ResultSchema>
-export type ResultMetrics = z.infer<typeof ResultMetricsSchema>
+export type Result = z.infer<typeof ResultSchema>;
+export type ResultMetrics = z.infer<typeof ResultMetricsSchema>;

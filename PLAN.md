@@ -37,12 +37,12 @@ A tool being benchmarked (Claude Code, Kiro, Aider, etc.).
 
 ```typescript
 const HarnessSchema = z.object({
-  id: z.string(),                    // "claude-code"
-  name: z.string(),                  // "Claude Code CLI"
+  id: z.string(), // "claude-code"
+  name: z.string(), // "Claude Code CLI"
   version: z.string(),
-  provider: z.string(),              // "anthropic"
-  executor: z.enum(['cli', 'api', 'docker', 'manual']),
-  command: z.string().optional(),    // "claude"
+  provider: z.string(), // "anthropic"
+  executor: z.enum(["cli", "api", "docker", "manual"]),
+  command: z.string().optional(), // "claude"
   homepage: z.string().url().optional(),
   repository: z.string().url().optional(),
   capabilities: z.object({
@@ -61,10 +61,10 @@ The LLM backing the harness.
 
 ```typescript
 const ModelSchema = z.object({
-  id: z.string(),                    // "claude-sonnet-4-5-20250929"
-  name: z.string(),                  // "Claude Sonnet 4.5"
-  provider: z.enum(['anthropic', 'openai', 'google', 'other']),
-  family: z.string(),                // "claude-4.5"
+  id: z.string(), // "claude-sonnet-4-5-20250929"
+  name: z.string(), // "Claude Sonnet 4.5"
+  provider: z.enum(["anthropic", "openai", "google", "other"]),
+  family: z.string(), // "claude-4.5"
   pricing: z.object({
     inputPerMillion: z.number(),
     outputPerMillion: z.number(),
@@ -82,14 +82,19 @@ A collection of related tasks.
 
 ```typescript
 const SuiteSchema = z.object({
-  id: z.string(),                    // "typescript-challenges"
+  id: z.string(), // "typescript-challenges"
   name: z.string(),
   description: z.string(),
   category: z.enum([
-    'bug-fix', 'feature-add', 'refactor',
-    'optimization', 'test-writing', 'docs', 'mixed',
+    "bug-fix",
+    "feature-add",
+    "refactor",
+    "optimization",
+    "test-writing",
+    "docs",
+    "mixed",
   ]),
-  difficulty: z.enum(['easy', 'medium', 'hard', 'expert']),
+  difficulty: z.enum(["easy", "medium", "hard", "expert"]),
   author: z.string(),
   tags: z.array(z.string()),
   taskIds: z.array(z.string()),
@@ -106,8 +111,8 @@ const TaskSchema = z.object({
   id: z.string(),
   suiteId: z.string(),
   title: z.string(),
-  description: z.string(),          // Markdown
-  difficulty: z.enum(['easy', 'medium', 'hard', 'expert']),
+  description: z.string(), // Markdown
+  difficulty: z.enum(["easy", "medium", "hard", "expert"]),
   estimatedMinutes: z.number().optional(),
   context: z.object({
     repoUrl: z.string().url().optional(),
@@ -118,9 +123,9 @@ const TaskSchema = z.object({
     framework: z.array(z.string()).optional(),
     requiredTools: z.array(z.string()).optional(),
   }),
-  prompt: z.string(),               // What we tell the harness
+  prompt: z.string(), // What we tell the harness
   validation: z.object({
-    type: z.enum(['test-suite', 'diff-match', 'llm-judge', 'manual', 'hybrid']),
+    type: z.enum(["test-suite", "diff-match", "llm-judge", "manual", "hybrid"]),
     testCommand: z.string().optional(),
     testFiles: z.array(z.string()).optional(),
     expectedFiles: z.record(z.string(), z.string()).optional(),
@@ -147,16 +152,18 @@ const RunSchema = z.object({
   startedAt: z.coerce.date(),
   completedAt: z.coerce.date().optional(),
   durationMs: z.number().optional(),
-  config: z.object({
-    temperature: z.number().optional(),
-    maxTokens: z.number().optional(),
-    customFlags: z.record(z.string(), z.any()).optional(),
-  }).optional(),
+  config: z
+    .object({
+      temperature: z.number().optional(),
+      maxTokens: z.number().optional(),
+      customFlags: z.record(z.string(), z.any()).optional(),
+    })
+    .optional(),
   environment: z.object({
     os: z.string(),
     arch: z.string(),
   }),
-  status: z.enum(['pending', 'running', 'completed', 'failed', 'timeout']),
+  status: z.enum(["pending", "running", "completed", "failed", "timeout"]),
   submittedBy: z.string().optional(),
 });
 ```
@@ -189,17 +196,21 @@ const ResultSchema = z.object({
     linesRemoved: z.number().optional(),
     diffSize: z.number().optional(),
   }),
-  validation: z.object({
-    type: z.string(),
-    details: z.record(z.string(), z.any()),
-    testsRun: z.number().optional(),
-    testsPassed: z.number().optional(),
-    testsFailed: z.number().optional(),
-  }).optional(),
-  error: z.object({
-    type: z.string(),
-    message: z.string(),
-  }).optional(),
+  validation: z
+    .object({
+      type: z.string(),
+      details: z.record(z.string(), z.any()),
+      testsRun: z.number().optional(),
+      testsPassed: z.number().optional(),
+      testsFailed: z.number().optional(),
+    })
+    .optional(),
+  error: z
+    .object({
+      type: z.string(),
+      message: z.string(),
+    })
+    .optional(),
 });
 ```
 
@@ -213,12 +224,12 @@ const ResultSchema = z.object({
 
 ### Storage Strategy
 
-| Data | Format | Why |
-|------|--------|-----|
-| Harnesses, Models | YAML files in `data/` | Easy to PR, version-controlled |
-| Tasks, Suites | YAML files in `data/tasks/` | Community-contributable |
-| Runs, Results | SQLite (`data/harness-bench.db`) | Queryable for leaderboards |
-| Artifacts (transcripts, diffs, logs) | Files in `data/artifacts/{runId}/` | Large, not queryable |
+| Data                                 | Format                             | Why                            |
+| ------------------------------------ | ---------------------------------- | ------------------------------ |
+| Harnesses, Models                    | YAML files in `data/`              | Easy to PR, version-controlled |
+| Tasks, Suites                        | YAML files in `data/tasks/`        | Community-contributable        |
+| Runs, Results                        | SQLite (`data/harness-bench.db`)   | Queryable for leaderboards     |
+| Artifacts (transcripts, diffs, logs) | Files in `data/artifacts/{runId}/` | Large, not queryable           |
 
 ### SQLite Tables
 
@@ -278,7 +289,7 @@ interface HarnessAdapter {
 }
 
 interface ExecutionConfig {
-  workspace: string;       // Isolated temp directory
+  workspace: string; // Isolated temp directory
   model: string;
   timeout: number;
   env: Record<string, string>;
@@ -286,7 +297,7 @@ interface ExecutionConfig {
 }
 
 interface ExecutionResult {
-  status: 'success' | 'failure' | 'timeout' | 'error';
+  status: "success" | "failure" | "timeout" | "error";
   exitCode: number;
   duration: number;
   artifacts: ExecutionArtifacts;
@@ -315,10 +326,14 @@ User invokes CLI
 class Grader {
   async grade(task, workspace, result): Promise<GradingResult> {
     switch (task.validation.type) {
-      case 'test-suite': return this.gradeByTest(task, workspace);
-      case 'diff-match': return this.gradeByDiff(task, workspace);
-      case 'llm-judge': return this.gradeByLLM(task, workspace);
-      case 'hybrid':    return this.gradeHybrid(task, workspace);
+      case "test-suite":
+        return this.gradeByTest(task, workspace);
+      case "diff-match":
+        return this.gradeByDiff(task, workspace);
+      case "llm-judge":
+        return this.gradeByLLM(task, workspace);
+      case "hybrid":
+        return this.gradeHybrid(task, workspace);
     }
   }
 }
@@ -431,14 +446,14 @@ validation:
 
 ### Key Visualizations
 
-| Viz | Purpose | Location |
-|-----|---------|----------|
-| Performance matrix | Sortable heatmap: harness x metric | `/dashboard` |
-| Radar chart | Multi-dimensional comparison (overlapping) | `/dashboard`, `/harnesses/compare` |
-| Cost vs. quality scatter | X=cost, Y=success rate, bubble=speed | `/dashboard` |
-| Transcript viewer | Full conversation with tool calls, timestamps, tokens | `/runs/[id]` |
-| Timeline waterfall | Token usage + tool calls over time | `/runs/[id]` |
-| Diff viewer | Side-by-side code output comparison | `/runs/[id]`, `/runs/compare` |
+| Viz                      | Purpose                                               | Location                           |
+| ------------------------ | ----------------------------------------------------- | ---------------------------------- |
+| Performance matrix       | Sortable heatmap: harness x metric                    | `/dashboard`                       |
+| Radar chart              | Multi-dimensional comparison (overlapping)            | `/dashboard`, `/harnesses/compare` |
+| Cost vs. quality scatter | X=cost, Y=success rate, bubble=speed                  | `/dashboard`                       |
+| Transcript viewer        | Full conversation with tool calls, timestamps, tokens | `/runs/[id]`                       |
+| Timeline waterfall       | Token usage + tool calls over time                    | `/runs/[id]`                       |
+| Diff viewer              | Side-by-side code output comparison                   | `/runs/[id]`, `/runs/compare`      |
 
 ### Reusable Components
 
@@ -452,7 +467,7 @@ validation:
 
 ### Killer Features
 
-1. **Transcript viewer** — See *how* each harness thinks through problems
+1. **Transcript viewer** — See _how_ each harness thinks through problems
 2. **Side-by-side run comparison** — Synchronized transcripts showing divergence points
 3. **Performance matrix** — At-a-glance harness x category heatmap
 
@@ -509,6 +524,6 @@ jobs:
 1. **YAML for definitions, SQLite for results** — Easy to contribute, easy to query
 2. **Adapter pattern** — Adding a harness = adding one file
 3. **Test-suite grading by default** — Objective, reproducible, automatable
-4. **Transcripts are first-class** — The *how* matters as much as the *what*
+4. **Transcripts are first-class** — The _how_ matters as much as the _what_
 5. **Local-first** — Everything runs on your machine, cloud is optional
 6. **Incremental value** — Useful with 2 harnesses and 3 tasks, scales to hundreds

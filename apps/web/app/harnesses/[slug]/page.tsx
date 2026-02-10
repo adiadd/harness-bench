@@ -1,48 +1,50 @@
-import { notFound } from "next/navigation"
+import { notFound } from "next/navigation";
 
-import { ChartBar, CurrencyDollar, Lightning, Trophy } from "@phosphor-icons/react/dist/ssr"
-
-import { Badge } from "@workspace/ui/components/badge"
 import {
-  Card,
-  CardContent,
-} from "@workspace/ui/components/card"
+  ChartBar,
+  CurrencyDollar,
+  Lightning,
+  Trophy,
+} from "@phosphor-icons/react/dist/ssr";
 
-import { mockHarnesses, mockLeaderboard, mockRuns } from "@/lib/mock-data"
-import { MetricCard } from "@/components/metric-card"
-import { ScoreBadge } from "@/components/score-badge"
+import { Badge } from "@workspace/ui/components/badge";
+import { Card, CardContent } from "@workspace/ui/components/card";
+
+import { mockHarnesses, mockLeaderboard, mockRuns } from "@/lib/mock-data";
+import { MetricCard } from "@/components/metric-card";
+import { ScoreBadge } from "@/components/score-badge";
 
 export default async function HarnessProfilePage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params
+  const { slug } = await params;
 
-  const harness = mockHarnesses.find((h) => h.slug === slug)
+  const harness = mockHarnesses.find((h) => h.slug === slug);
 
   if (!harness) {
-    notFound()
+    notFound();
   }
 
   const leaderboardEntries = mockLeaderboard.filter(
-    (entry) => entry.harness === harness.name
-  )
-  const harnessRuns = mockRuns.filter((run) => run.harness === harness.name)
+    (entry) => entry.harness === harness.name,
+  );
+  const harnessRuns = mockRuns.filter((run) => run.harness === harness.name);
 
   const avgScore = leaderboardEntries.length
     ? leaderboardEntries.reduce((sum, e) => sum + e.score, 0) /
       leaderboardEntries.length
-    : 0
+    : 0;
   const avgCost = leaderboardEntries.length
     ? leaderboardEntries.reduce((sum, e) => sum + e.avgCost, 0) /
       leaderboardEntries.length
-    : 0
+    : 0;
   const avgPassRate = leaderboardEntries.length
     ? leaderboardEntries.reduce((sum, e) => sum + e.passRate, 0) /
       leaderboardEntries.length
-    : 0
-  const totalRuns = leaderboardEntries.reduce((sum, e) => sum + e.runs, 0)
+    : 0;
+  const totalRuns = leaderboardEntries.reduce((sum, e) => sum + e.runs, 0);
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
@@ -148,5 +150,5 @@ export default async function HarnessProfilePage({
         </Card>
       </div>
     </main>
-  )
+  );
 }

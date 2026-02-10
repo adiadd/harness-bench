@@ -1,7 +1,12 @@
-import { notFound } from "next/navigation"
-import { Badge } from "@workspace/ui/components/badge"
-import { Card, CardHeader, CardTitle, CardContent } from "@workspace/ui/components/card"
-import { Separator } from "@workspace/ui/components/separator"
+import { notFound } from "next/navigation";
+import { Badge } from "@workspace/ui/components/badge";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@workspace/ui/components/card";
+import { Separator } from "@workspace/ui/components/separator";
 import {
   ArrowLeft,
   Code,
@@ -9,30 +14,35 @@ import {
   Terminal,
   Clock,
   CurrencyDollar,
-} from "@phosphor-icons/react/dist/ssr"
-import Link from "next/link"
-import { mockTasks, mockRuns, mockHarnesses, mockModels } from "@/lib/mock-data"
-import { ScoreBadge } from "@/components/score-badge"
+} from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import {
+  mockTasks,
+  mockRuns,
+  mockHarnesses,
+  mockModels,
+} from "@/lib/mock-data";
+import { ScoreBadge } from "@/components/score-badge";
 
 const difficultyColor: Record<string, string> = {
   easy: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200",
   medium: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200",
   hard: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
-}
+};
 
 export default async function TaskDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = await params
-  const task = mockTasks.find((t) => t.id === id)
+  const { id } = await params;
+  const task = mockTasks.find((t) => t.id === id);
 
   if (!task) {
-    notFound()
+    notFound();
   }
 
-  const taskRuns = mockRuns.filter((r) => r.taskId === task.id)
+  const taskRuns = mockRuns.filter((r) => r.taskId === task.id);
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10 space-y-8">
@@ -83,9 +93,7 @@ export default async function TaskDetailPage({
             {task.context.framework && (
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Framework</span>
-                <Badge variant="outline">
-                  {task.context.framework}
-                </Badge>
+                <Badge variant="outline">{task.context.framework}</Badge>
               </div>
             )}
             {task.context.files && (
@@ -93,7 +101,11 @@ export default async function TaskDetailPage({
                 <span className="text-muted-foreground">Files</span>
                 <div className="flex flex-wrap gap-1">
                   {task.context.files.map((f: string) => (
-                    <Badge key={f} variant="secondary" className="gap-1 text-xs">
+                    <Badge
+                      key={f}
+                      variant="secondary"
+                      className="gap-1 text-xs"
+                    >
                       <FileCode className="size-3" />
                       {f}
                     </Badge>
@@ -114,7 +126,9 @@ export default async function TaskDetailPage({
           <CardContent className="space-y-3 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Type</span>
-              <Badge variant="outline">{task.validation?.type ?? "unknown"}</Badge>
+              <Badge variant="outline">
+                {task.validation?.type ?? "unknown"}
+              </Badge>
             </div>
             {task.validation.testCommand && (
               <div className="flex justify-between">
@@ -151,20 +165,28 @@ export default async function TaskDetailPage({
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b">
-                      <th className="px-4 py-3 text-left font-medium">Harness</th>
+                      <th className="px-4 py-3 text-left font-medium">
+                        Harness
+                      </th>
                       <th className="px-4 py-3 text-left font-medium">Model</th>
                       <th className="px-4 py-3 text-left font-medium">Score</th>
                       <th className="px-4 py-3 text-left font-medium">Cost</th>
-                      <th className="px-4 py-3 text-left font-medium">Duration</th>
-                      <th className="px-4 py-3 text-left font-medium">Status</th>
+                      <th className="px-4 py-3 text-left font-medium">
+                        Duration
+                      </th>
+                      <th className="px-4 py-3 text-left font-medium">
+                        Status
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {taskRuns.map((run) => {
                       const harness = mockHarnesses.find(
-                        (h) => h.id === run.harnessId
-                      )
-                      const model = mockModels.find((m) => m.id === run.modelId)
+                        (h) => h.id === run.harnessId,
+                      );
+                      const model = mockModels.find(
+                        (m) => m.id === run.modelId,
+                      );
                       return (
                         <tr key={run.id} className="border-b last:border-0">
                           <td className="px-4 py-3 font-medium">
@@ -200,7 +222,7 @@ export default async function TaskDetailPage({
                             </Badge>
                           </td>
                         </tr>
-                      )
+                      );
                     })}
                   </tbody>
                 </table>
@@ -210,5 +232,5 @@ export default async function TaskDetailPage({
         )}
       </div>
     </main>
-  )
+  );
 }

@@ -1,17 +1,17 @@
-import { Badge } from "@workspace/ui/components/badge"
+import { Badge } from "@workspace/ui/components/badge";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from "@workspace/ui/components/card"
-import { Separator } from "@workspace/ui/components/separator"
+} from "@workspace/ui/components/card";
+import { Separator } from "@workspace/ui/components/separator";
 import {
   File,
   CheckCircle,
   GitPullRequest,
-} from "@phosphor-icons/react/dist/ssr"
+} from "@phosphor-icons/react/dist/ssr";
 
 export default function SubmitTaskPage() {
   return (
@@ -119,7 +119,8 @@ context:
               <div>
                 <strong>Clear prompt</strong> — the prompt must be unambiguous.
                 Specify file paths, function signatures, and expected behavior.
-                Avoid vague language like &quot;implement something useful.&quot;
+                Avoid vague language like &quot;implement something
+                useful.&quot;
               </div>
             </li>
             <li className="flex items-start gap-3">
@@ -149,8 +150,8 @@ context:
                 >
                   hard
                 </Badge>
-                . Be honest about difficulty from the perspective of an AI agent,
-                not a human developer.
+                . Be honest about difficulty from the perspective of an AI
+                agent, not a human developer.
               </div>
             </li>
             <li className="flex items-start gap-3">
@@ -161,9 +162,9 @@ context:
                 4
               </Badge>
               <div>
-                <strong>Language specification</strong> — the primary programming
-                language the task targets. This is used for filtering and
-                suite grouping on the dashboard.
+                <strong>Language specification</strong> — the primary
+                programming language the task targets. This is used for
+                filtering and suite grouping on the dashboard.
               </div>
             </li>
             <li className="flex items-start gap-3">
@@ -229,5 +230,5 @@ context:
         </CardContent>
       </Card>
     </main>
-  )
+  );
 }

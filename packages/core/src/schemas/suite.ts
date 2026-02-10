@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 export const SuiteCategorySchema = z.enum([
   "bug-fix",
@@ -8,9 +8,9 @@ export const SuiteCategorySchema = z.enum([
   "test-writing",
   "docs",
   "mixed",
-])
+]);
 
-export const DifficultySchema = z.enum(["easy", "medium", "hard", "expert"])
+export const DifficultySchema = z.enum(["easy", "medium", "hard", "expert"]);
 
 export const SuiteSchema = z.object({
   id: z.string(),
@@ -22,8 +22,8 @@ export const SuiteSchema = z.object({
   tags: z.array(z.string()),
   taskIds: z.array(z.string()),
   version: z.string(),
-})
+});
 
-export type Suite = z.infer<typeof SuiteSchema>
-export type SuiteCategory = z.infer<typeof SuiteCategorySchema>
-export type Difficulty = z.infer<typeof DifficultySchema>
+export type Suite = z.infer<typeof SuiteSchema>;
+export type SuiteCategory = z.infer<typeof SuiteCategorySchema>;
+export type Difficulty = z.infer<typeof DifficultySchema>;

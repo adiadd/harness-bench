@@ -1,7 +1,7 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { ThemeToggle } from "@/components/theme-toggle"
-import { NavLinks } from "@/components/nav-links"
+import { ThemeToggle } from "@/components/theme-toggle";
+import { NavLinks } from "@/components/nav-links";
 
 export function Nav() {
   return (
@@ -16,5 +16,5 @@ export function Nav() {
         <ThemeToggle />
       </div>
     </header>
-  )
+  );
 }

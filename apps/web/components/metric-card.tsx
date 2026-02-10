@@ -1,21 +1,21 @@
-import { cn } from "@workspace/ui/lib/utils"
+import { cn } from "@workspace/ui/lib/utils";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@workspace/ui/components/card"
-import { ArrowUp, ArrowDown, Minus } from "@phosphor-icons/react/dist/ssr"
+} from "@workspace/ui/components/card";
+import { ArrowUp, ArrowDown, Minus } from "@phosphor-icons/react/dist/ssr";
 
 type MetricCardProps = {
-  title?: string
-  label?: string
-  value: React.ReactNode
-  description?: string
-  icon?: React.ReactNode
-  trend?: "up" | "down" | "neutral"
-  trendValue?: string
-}
+  title?: string;
+  label?: string;
+  value: React.ReactNode;
+  description?: string;
+  icon?: React.ReactNode;
+  trend?: "up" | "down" | "neutral";
+  trendValue?: string;
+};
 
 export function MetricCard({
   title,
@@ -26,7 +26,7 @@ export function MetricCard({
   trend,
   trendValue,
 }: MetricCardProps) {
-  const displayTitle = title ?? label
+  const displayTitle = title ?? label;
 
   return (
     <Card>
@@ -45,14 +45,16 @@ export function MetricCard({
                 "flex items-center gap-0.5 text-xs font-medium",
                 trend === "up" && "text-green-600 dark:text-green-400",
                 trend === "down" && "text-red-600 dark:text-red-400",
-                trend === "neutral" && "text-muted-foreground"
+                trend === "neutral" && "text-muted-foreground",
               )}
             >
               {trend === "up" && <ArrowUp className="size-3" weight="bold" />}
               {trend === "down" && (
                 <ArrowDown className="size-3" weight="bold" />
               )}
-              {trend === "neutral" && <Minus className="size-3" weight="bold" />}
+              {trend === "neutral" && (
+                <Minus className="size-3" weight="bold" />
+              )}
               {trendValue}
             </span>
           )}
@@ -62,5 +64,5 @@ export function MetricCard({
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -3,14 +3,14 @@ export {
   HarnessCapabilitiesSchema,
   type Harness,
   type HarnessCapabilities,
-} from "./harness.js"
+} from "./harness.js";
 
 export {
   ModelSchema,
   ModelPricingSchema,
   type Model,
   type ModelPricing,
-} from "./model.js"
+} from "./model.js";
 
 export {
   SuiteSchema,
@@ -19,7 +19,7 @@ export {
   type Suite,
   type SuiteCategory,
   type Difficulty,
-} from "./suite.js"
+} from "./suite.js";
 
 export {
   TaskSchema,
@@ -30,7 +30,7 @@ export {
   type TaskContext,
   type TaskValidation,
   type ValidationType,
-} from "./task.js"
+} from "./task.js";
 
 export {
   RunSchema,
@@ -41,7 +41,7 @@ export {
   type RunStatus,
   type RunConfig,
   type RunEnvironment,
-} from "./run.js"
+} from "./run.js";
 
 export {
   ResultSchema,
@@ -50,4 +50,4 @@ export {
   ResultErrorSchema,
   type Result,
   type ResultMetrics,
-} from "./result.js"
+} from "./result.js";

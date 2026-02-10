@@ -1,14 +1,21 @@
-import Link from "next/link"
-import { Badge } from "@workspace/ui/components/badge"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@workspace/ui/components/card"
-import { ListChecks, Code, Tag } from "@phosphor-icons/react/dist/ssr"
-import { mockTasks } from "@/lib/mock-data"
+import Link from "next/link";
+import { Badge } from "@workspace/ui/components/badge";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@workspace/ui/components/card";
+import { ListChecks, Code, Tag } from "@phosphor-icons/react/dist/ssr";
+import { mockTasks } from "@/lib/mock-data";
 
 const difficultyColor: Record<string, string> = {
   easy: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200",
   medium: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200",
   hard: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
-}
+};
 
 export default function TasksPage() {
   return (
@@ -76,5 +83,5 @@ export default function TasksPage() {
         ))}
       </div>
     </main>
-  )
+  );
 }

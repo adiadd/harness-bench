@@ -1,5 +1,5 @@
-import { z } from "zod"
-import { DifficultySchema } from "./suite.js"
+import { z } from "zod";
+import { DifficultySchema } from "./suite.js";
 
 export const ValidationTypeSchema = z.enum([
   "test-suite",
@@ -7,7 +7,7 @@ export const ValidationTypeSchema = z.enum([
   "llm-judge",
   "manual",
   "hybrid",
-])
+]);
 
 export const TaskContextSchema = z.object({
   repoUrl: z.string().url().optional(),
@@ -17,7 +17,7 @@ export const TaskContextSchema = z.object({
   language: z.string(),
   framework: z.array(z.string()).optional(),
   requiredTools: z.array(z.string()).optional(),
-})
+});
 
 export const TaskValidationSchema = z.object({
   type: ValidationTypeSchema,
@@ -27,7 +27,7 @@ export const TaskValidationSchema = z.object({
   judgePrompt: z.string().optional(),
   maxScore: z.number().default(100),
   passingScore: z.number().default(70),
-})
+});
 
 export const TaskSchema = z.object({
   id: z.string(),
@@ -42,9 +42,9 @@ export const TaskSchema = z.object({
   author: z.string(),
   tags: z.array(z.string()),
   version: z.string(),
-})
+});
 
-export type Task = z.infer<typeof TaskSchema>
-export type TaskContext = z.infer<typeof TaskContextSchema>
-export type TaskValidation = z.infer<typeof TaskValidationSchema>
-export type ValidationType = z.infer<typeof ValidationTypeSchema>
+export type Task = z.infer<typeof TaskSchema>;
+export type TaskContext = z.infer<typeof TaskContextSchema>;
+export type TaskValidation = z.infer<typeof TaskValidationSchema>;
+export type ValidationType = z.infer<typeof ValidationTypeSchema>;

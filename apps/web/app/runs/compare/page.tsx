@@ -1,6 +1,6 @@
-import { Badge } from "@workspace/ui/components/badge"
-import { Card, CardContent } from "@workspace/ui/components/card"
-import { Separator } from "@workspace/ui/components/separator"
+import { Badge } from "@workspace/ui/components/badge";
+import { Card, CardContent } from "@workspace/ui/components/card";
+import { Separator } from "@workspace/ui/components/separator";
 import {
   ArrowsLeftRight,
   Trophy,
@@ -8,17 +8,22 @@ import {
   CurrencyDollar,
   ChatCircleText,
   Wrench,
-} from "@phosphor-icons/react/dist/ssr"
-import { mockRuns, mockTasks, mockHarnesses, mockModels } from "@/lib/mock-data"
-import { ScoreBadge } from "@/components/score-badge"
+} from "@phosphor-icons/react/dist/ssr";
+import {
+  mockRuns,
+  mockTasks,
+  mockHarnesses,
+  mockModels,
+} from "@/lib/mock-data";
+import { ScoreBadge } from "@/components/score-badge";
 
 export default function CompareRunsPage() {
-  const runsToCompare = mockRuns.slice(0, 3)
+  const runsToCompare = mockRuns.slice(0, 3);
 
   const rows: {
-    label: string
-    icon: React.ReactNode
-    render: (run: (typeof mockRuns)[number]) => React.ReactNode
+    label: string;
+    icon: React.ReactNode;
+    render: (run: (typeof mockRuns)[number]) => React.ReactNode;
   }[] = [
     {
       label: "Score",
@@ -45,9 +50,9 @@ export default function CompareRunsPage() {
       label: "Tokens",
       icon: <ChatCircleText className="size-4" />,
       render: (run) => {
-        const m = run.result?.metrics
-        if (!m) return "—"
-        return ((m.tokensInput ?? 0) + (m.tokensOutput ?? 0)).toLocaleString()
+        const m = run.result?.metrics;
+        if (!m) return "—";
+        return ((m.tokensInput ?? 0) + (m.tokensOutput ?? 0)).toLocaleString();
       },
     },
     {
@@ -55,7 +60,7 @@ export default function CompareRunsPage() {
       icon: <Wrench className="size-4" />,
       render: (run) => run.result?.metrics?.toolCalls ?? "—",
     },
-  ]
+  ];
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10 space-y-8">
@@ -85,10 +90,10 @@ export default function CompareRunsPage() {
                   </th>
                   {runsToCompare.map((run) => {
                     const harness = mockHarnesses.find(
-                      (h) => h.id === run.harnessId
-                    )
-                    const model = mockModels.find((m) => m.id === run.modelId)
-                    const task = mockTasks.find((t) => t.id === run.taskId)
+                      (h) => h.id === run.harnessId,
+                    );
+                    const model = mockModels.find((m) => m.id === run.modelId);
+                    const task = mockTasks.find((t) => t.id === run.taskId);
                     return (
                       <th key={run.id} className="px-4 py-3 text-left">
                         <div className="space-y-1">
@@ -113,7 +118,7 @@ export default function CompareRunsPage() {
                           </Badge>
                         </div>
                       </th>
-                    )
+                    );
                   })}
                 </tr>
               </thead>
@@ -141,5 +146,5 @@ export default function CompareRunsPage() {
         </CardContent>
       </Card>
     </main>
-  )
+  );
 }

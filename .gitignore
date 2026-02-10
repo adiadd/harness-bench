@@ -37,6 +37,7 @@ npm-debug.log*
 
 # AI
 settings.local.json
+.playwright-mcp
 
 # Benchmark data
 data/harness-bench.db

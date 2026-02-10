@@ -28,6 +28,7 @@ export function NavLinks() {
             key={link.href}
             variant={isActive ? "secondary" : "ghost"}
             size="sm"
+            nativeButton={false}
             render={<Link href={link.href} />}
           >
             {link.label}

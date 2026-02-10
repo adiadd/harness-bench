@@ -134,7 +134,7 @@ export default async function RunDetailPage({
   const metrics = run.result?.metrics
 
   return (
-    <div className="space-y-8">
+    <main className="mx-auto max-w-6xl px-6 py-10 space-y-8">
       {/* Back link */}
       <Link
         href="/runs"
@@ -232,6 +232,6 @@ export default async function RunDetailPage({
           </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   )
 }

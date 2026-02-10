@@ -12,7 +12,7 @@ const difficultyColor: Record<string, string> = {
 
 export default function TasksPage() {
   return (
-    <div className="space-y-8">
+    <main className="mx-auto max-w-6xl px-6 py-10 space-y-8">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Benchmark Tasks</h1>
         <p className="text-muted-foreground mt-1">
@@ -75,6 +75,6 @@ export default function TasksPage() {
           </Link>
         ))}
       </div>
-    </div>
+    </main>
   )
 }

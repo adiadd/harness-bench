@@ -15,7 +15,7 @@ import {
 
 export default function SubmitResultsPage() {
   return (
-    <div className="space-y-10">
+    <main className="mx-auto max-w-6xl px-6 py-10 space-y-10">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">
           Submit Benchmark Results
@@ -205,6 +205,6 @@ harness-bench run \\
           </ol>
         </CardContent>
       </Card>
-    </div>
+    </main>
   )
 }

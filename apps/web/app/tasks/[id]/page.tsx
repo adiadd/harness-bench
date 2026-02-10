@@ -35,7 +35,7 @@ export default async function TaskDetailPage({
   const taskRuns = mockRuns.filter((r) => r.taskId === task.id)
 
   return (
-    <div className="space-y-8">
+    <main className="mx-auto max-w-6xl px-6 py-10 space-y-8">
       {/* Back link */}
       <Link
         href="/tasks"
@@ -209,6 +209,6 @@ export default async function TaskDetailPage({
           </Card>
         )}
       </div>
-    </div>
+    </main>
   )
 }

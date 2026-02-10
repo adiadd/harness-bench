@@ -17,7 +17,7 @@ import {
 
 export default function MethodologyPage() {
   return (
-    <div className="space-y-10">
+    <main className="mx-auto max-w-6xl px-6 py-10 space-y-10">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Methodology</h1>
         <p className="text-muted-foreground mt-2 max-w-2xl text-lg">
@@ -230,7 +230,7 @@ export default function MethodologyPage() {
           </ul>
         </CardContent>
       </Card>
-    </div>
+    </main>
   )
 }
 

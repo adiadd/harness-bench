@@ -58,7 +58,7 @@ export default function CompareRunsPage() {
   ]
 
   return (
-    <div className="space-y-8">
+    <main className="mx-auto max-w-6xl px-6 py-10 space-y-8">
       {/* Header */}
       <div className="flex items-center gap-3">
         <ArrowsLeftRight className="size-7" />
@@ -140,6 +140,6 @@ export default function CompareRunsPage() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </main>
   )
 }

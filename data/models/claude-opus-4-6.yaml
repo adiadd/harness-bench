@@ -1,0 +1,11 @@
+id: claude-opus-4-6
+name: Claude Opus 4.6
+provider: anthropic
+family: claude-4.6
+pricing:
+  inputPerMillion: 15
+  outputPerMillion: 75
+  cacheWritePerMillion: 18.75
+  cacheReadPerMillion: 1.5
+contextWindow: 200000
+maxOutput: 32000

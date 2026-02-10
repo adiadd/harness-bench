@@ -1,0 +1,14 @@
+id: claude-code
+name: Claude Code CLI
+version: "1.0.0"
+provider: anthropic
+executor: cli
+command: claude
+homepage: https://claude.ai/code
+repository: https://github.com/anthropics/claude-code
+capabilities:
+  streaming: true
+  multifile: true
+  codeExecution: true
+  webSearch: true
+  shellAccess: true

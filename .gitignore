@@ -37,3 +37,9 @@ npm-debug.log*
 
 # AI
 settings.local.json
+
+# Benchmark data
+data/harness-bench.db
+data/harness-bench.db-wal
+data/harness-bench.db-shm
+data/artifacts/

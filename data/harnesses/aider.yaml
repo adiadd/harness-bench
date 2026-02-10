@@ -1,0 +1,14 @@
+id: aider
+name: Aider
+version: "0.82.0"
+provider: community
+executor: cli
+command: aider
+homepage: https://aider.chat
+repository: https://github.com/Aider-AI/aider
+capabilities:
+  streaming: true
+  multifile: true
+  codeExecution: false
+  webSearch: false
+  shellAccess: true

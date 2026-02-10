@@ -1,0 +1,11 @@
+id: claude-sonnet-4-5
+name: Claude Sonnet 4.5
+provider: anthropic
+family: claude-4.5
+pricing:
+  inputPerMillion: 3
+  outputPerMillion: 15
+  cacheWritePerMillion: 3.75
+  cacheReadPerMillion: 0.3
+contextWindow: 200000
+maxOutput: 16384

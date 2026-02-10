@@ -1,0 +1,9 @@
+id: gpt-4o
+name: GPT-4o
+provider: openai
+family: gpt-4o
+pricing:
+  inputPerMillion: 2.5
+  outputPerMillion: 10
+contextWindow: 128000
+maxOutput: 16384

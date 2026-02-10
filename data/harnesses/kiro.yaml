@@ -1,0 +1,13 @@
+id: kiro
+name: Kiro CLI
+version: "1.0.0"
+provider: amazon
+executor: cli
+command: kiro
+homepage: https://kiro.dev
+capabilities:
+  streaming: true
+  multifile: true
+  codeExecution: true
+  webSearch: false
+  shellAccess: true

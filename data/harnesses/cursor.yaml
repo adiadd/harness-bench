@@ -1,0 +1,13 @@
+id: cursor
+name: Cursor Agent
+version: "1.0.0"
+provider: cursor
+executor: cli
+command: cursor
+homepage: https://cursor.com
+capabilities:
+  streaming: true
+  multifile: true
+  codeExecution: true
+  webSearch: false
+  shellAccess: true

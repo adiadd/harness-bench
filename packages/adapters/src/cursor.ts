@@ -9,22 +9,22 @@ import {
   type AdapterMetrics,
 } from "./types.js"
 
-export class KiroAdapter implements HarnessAdapter {
-  id = "kiro"
-  name = "Kiro CLI"
+export class CursorAdapter implements HarnessAdapter {
+  id = "cursor"
+  name = "Cursor Agent"
 
   async setup(): Promise<HarnessSetupResult> {
     try {
       const version = await this.getVersion()
       return { ready: true, version }
     } catch {
-      return { ready: false, version: "unknown", error: "Kiro CLI not found" }
+      return { ready: false, version: "unknown", error: "Cursor CLI not found" }
     }
   }
 
   private getVersion(): Promise<string> {
     return new Promise((resolve, reject) => {
-      const proc = spawn("kiro", ["--version"], { stdio: ["pipe", "pipe", "pipe"] })
+      const proc = spawn("cursor", ["--version"], { stdio: ["pipe", "pipe", "pipe"] })
       let stdout = ""
       proc.stdout.on("data", (d: Buffer) => (stdout += d.toString()))
       proc.on("close", (code) => {
@@ -38,13 +38,13 @@ export class KiroAdapter implements HarnessAdapter {
   async run(task: Task, config: ExecutionConfig): Promise<ExecutionResult> {
     const start = Date.now()
     const args = [
+      "--agent",
       "--prompt", task.prompt,
       "--model", config.model,
-      "--non-interactive",
     ]
 
     return new Promise((resolve) => {
-      const proc = spawn("kiro", args, {
+      const proc = spawn("cursor", args, {
         cwd: config.workspace,
         env: { ...process.env, ...config.env },
         stdio: ["pipe", "pipe", "pipe"],
@@ -89,14 +89,16 @@ export class KiroAdapter implements HarnessAdapter {
     })
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async collectMetrics(_artifacts: ExecutionArtifacts): Promise<AdapterMetrics> {
+  async collectMetrics(artifacts: ExecutionArtifacts): Promise<AdapterMetrics> {
+    const tokenMatch = artifacts.stdout.match(/tokens[:\s]*([\d,]+)\s*input.*?([\d,]+)\s*output/i)
+    const costMatch = artifacts.stdout.match(/cost[:\s]*\$?([\d.]+)/i)
+
     return {
-      tokensInput: 0,
-      tokensOutput: 0,
+      tokensInput: tokenMatch ? parseInt(tokenMatch[1]!.replace(/,/g, ""), 10) : 0,
+      tokensOutput: tokenMatch ? parseInt(tokenMatch[2]!.replace(/,/g, ""), 10) : 0,
       toolCalls: 0,
       turns: 1,
-      costUsd: 0,
+      costUsd: costMatch ? parseFloat(costMatch[1]!) : 0,
     }
   }
 }

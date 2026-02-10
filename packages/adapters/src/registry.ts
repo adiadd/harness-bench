@@ -2,11 +2,13 @@ import { type HarnessAdapter } from "./types.js"
 import { ClaudeCodeAdapter } from "./claude-code.js"
 import { AiderAdapter } from "./aider.js"
 import { KiroAdapter } from "./kiro.js"
+import { CursorAdapter } from "./cursor.js"
 
 const adapters = new Map<string, () => HarnessAdapter>([
   ["claude-code", () => new ClaudeCodeAdapter()],
   ["aider", () => new AiderAdapter()],
   ["kiro", () => new KiroAdapter()],
+  ["cursor", () => new CursorAdapter()],
 ])
 
 export function getAdapter(id: string): HarnessAdapter {

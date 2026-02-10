@@ -35,6 +35,20 @@
         "typescript": "^5.9.3",
       },
     },
+    "packages/adapters": {
+      "name": "@workspace/adapters",
+      "version": "0.0.0",
+      "dependencies": {
+        "@workspace/core": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/node": "^25.1.0",
+        "@workspace/eslint-config": "workspace:*",
+        "@workspace/typescript-config": "workspace:*",
+        "eslint": "^9.39.2",
+        "typescript": "^5.9.3",
+      },
+    },
     "packages/core": {
       "name": "@workspace/core",
       "version": "0.0.0",
@@ -71,6 +85,23 @@
         "globals": "^17.2.0",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.54.0",
+      },
+    },
+    "packages/runner": {
+      "name": "@workspace/runner",
+      "version": "0.0.0",
+      "dependencies": {
+        "@workspace/adapters": "workspace:*",
+        "@workspace/core": "workspace:*",
+        "uuid": "^11.1.0",
+      },
+      "devDependencies": {
+        "@types/node": "^25.1.0",
+        "@types/uuid": "^10.0.0",
+        "@workspace/eslint-config": "workspace:*",
+        "@workspace/typescript-config": "workspace:*",
+        "eslint": "^9.39.2",
+        "typescript": "^5.9.3",
       },
     },
     "packages/typescript-config": {
@@ -440,9 +471,13 @@
 
     "@typescript-eslint/visitor-keys": ["@typescript-eslint/visitor-keys@8.54.0", "", { "dependencies": { "@typescript-eslint/types": "8.54.0", "eslint-visitor-keys": "^4.2.1" } }, "sha512-VFlhGSl4opC0bprJiItPQ1RfUhGDIBokcPwaFH4yiBCaNPeld/9VeXbiPO1cLyorQi1G1vL+ecBk1x8o1axORA=="],
 
+    "@workspace/adapters": ["@workspace/adapters@workspace:packages/adapters"],
+
     "@workspace/core": ["@workspace/core@workspace:packages/core"],
 
     "@workspace/eslint-config": ["@workspace/eslint-config@workspace:packages/eslint-config"],
+
+    "@workspace/runner": ["@workspace/runner@workspace:packages/runner"],
 
     "@workspace/typescript-config": ["@workspace/typescript-config@workspace:packages/typescript-config"],
 

@@ -1,0 +1,27 @@
+{
+  "name": "@workspace/adapters",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@workspace/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3"
+  },
+  "exports": {
+    "./types": "./src/types.ts",
+    "./registry": "./src/registry.ts",
+    "./claude-code": "./src/claude-code.ts",
+    "./aider": "./src/aider.ts",
+    "./kiro": "./src/kiro.ts"
+  }
+}

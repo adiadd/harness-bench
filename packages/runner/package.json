@@ -1,0 +1,28 @@
+{
+  "name": "@workspace/runner",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@workspace/core": "workspace:*",
+    "@workspace/adapters": "workspace:*",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "@types/uuid": "^10.0.0",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3"
+  },
+  "exports": {
+    "./orchestrator": "./src/orchestrator.ts",
+    "./isolation": "./src/isolation.ts",
+    "./grader": "./src/grader.ts"
+  }
+}

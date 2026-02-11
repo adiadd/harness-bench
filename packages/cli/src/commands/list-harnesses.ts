@@ -2,7 +2,7 @@ import path from "node:path";
 import { loadHarnesses } from "@workspace/core/loader";
 
 export function listHarnesses() {
-  const rootDir = path.resolve(import.meta.dirname, "../../..");
+  const rootDir = path.resolve(import.meta.dirname, "../../../..");
   const dataDir = path.join(rootDir, "data");
   const harnesses = loadHarnesses(dataDir);
 

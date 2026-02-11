@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 import { type Task } from "@workspace/core/schemas";
 
 export interface GradingResult {
@@ -39,53 +39,45 @@ async function gradeByTest(
   workspacePath: string,
 ): Promise<GradingResult> {
   const command = task.validation.testCommand ?? "npm test";
+  const parts = command.split(" ");
 
-  try {
-    const output = execSync(command, {
-      cwd: workspacePath,
-      encoding: "utf-8",
-      timeout: 60_000,
-      env: { ...process.env, CI: "true" },
-    });
+  const result = spawnSync(parts[0]!, parts.slice(1), {
+    cwd: workspacePath,
+    encoding: "utf-8",
+    timeout: 60_000,
+    env: { ...process.env, CI: "true", NO_COLOR: "1" },
+  });
 
-    const { total, passed, failed } = parseTestOutput(output);
-    const score = total > 0 ? (passed / total) * task.validation.maxScore : 0;
+  // Combine stdout + stderr since test runners may use either
+  const output = (result.stdout ?? "") + "\n" + (result.stderr ?? "");
+  const isError = result.status !== 0;
 
-    return {
-      passed: score >= task.validation.passingScore,
-      score,
-      type: "test-suite",
-      details: { output, command },
-      testsRun: total,
-      testsPassed: passed,
-      testsFailed: failed,
-    };
-  } catch (err) {
-    const output =
-      err instanceof Error
-        ? ((err as { stdout?: string }).stdout ?? err.message)
-        : String(err);
-    const { total, passed, failed } = parseTestOutput(output);
-    const score = total > 0 ? (passed / total) * task.validation.maxScore : 0;
+  const { total, passed, failed } = parseTestOutput(output);
+  const score = total > 0 ? (passed / total) * task.validation.maxScore : 0;
 
-    return {
-      passed: score >= task.validation.passingScore,
-      score,
-      type: "test-suite",
-      details: { output, command, error: true },
-      testsRun: total,
-      testsPassed: passed,
-      testsFailed: failed,
-    };
-  }
+  return {
+    passed: score >= task.validation.passingScore,
+    score,
+    type: "test-suite",
+    details: { output, command, ...(isError ? { error: true } : {}) },
+    testsRun: total,
+    testsPassed: passed,
+    testsFailed: failed,
+  };
 }
 
-function parseTestOutput(output: string): {
+function stripAnsi(str: string): string {
+  // eslint-disable-next-line no-control-regex
+  return str.replace(/\x1b\[[0-9;]*m/g, "");
+}
+
+function parseTestOutput(rawOutput: string): {
   total: number;
   passed: number;
   failed: number;
 } {
-  // Try common test output formats
+  const output = stripAnsi(rawOutput);
+
   // Jest/Vitest: "Tests: X passed, Y failed, Z total"
   const jestMatch = output.match(
     /Tests:\s*(\d+)\s*passed.*?(\d+)\s*failed.*?(\d+)\s*total/i,
@@ -107,19 +99,24 @@ function parseTestOutput(output: string): {
     return { passed, failed: 0, total: parseInt(jestPassMatch[2]!, 10) };
   }
 
-  // Bun test: "X pass, Y fail"
-  const bunMatch = output.match(/(\d+)\s*pass.*?(\d+)\s*fail/i);
-  if (bunMatch) {
-    const passed = parseInt(bunMatch[1]!, 10);
-    const failed = parseInt(bunMatch[2]!, 10);
+  // Bun test: "X pass" and "Y fail" (may be on separate lines)
+  const bunPassMatch = output.match(/(\d+)\s*pass/i);
+  const bunFailMatch = output.match(/(\d+)\s*fail/i);
+  if (bunPassMatch) {
+    const passed = parseInt(bunPassMatch[1]!, 10);
+    const failed = bunFailMatch ? parseInt(bunFailMatch[1]!, 10) : 0;
     return { passed, failed, total: passed + failed };
   }
 
-  // Bun pass-only: "X pass"
-  const bunPassMatch = output.match(/(\d+)\s*pass/i);
-  if (bunPassMatch) {
-    const passed = parseInt(bunPassMatch[1]!, 10);
-    return { passed, failed: 0, total: passed };
+  // Pytest: "X passed, Y failed" or "X passed"
+  const pytestMatch = output.match(
+    /(\d+)\s*passed/i,
+  );
+  if (pytestMatch) {
+    const passed = parseInt(pytestMatch[1]!, 10);
+    const pytestFailMatch = output.match(/(\d+)\s*failed/i);
+    const failed = pytestFailMatch ? parseInt(pytestFailMatch[1]!, 10) : 0;
+    return { passed, failed, total: passed + failed };
   }
 
   return { total: 0, passed: 0, failed: 0 };

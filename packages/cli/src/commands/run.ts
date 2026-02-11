@@ -27,12 +27,25 @@ export async function run() {
     process.exit(1);
   }
 
-  const rootDir = path.resolve(import.meta.dirname, "../../..");
+  const rootDir = path.resolve(import.meta.dirname, "../../../..");
   const dataDir = path.join(rootDir, "data");
   const artifactsDir = path.join(dataDir, "artifacts");
   const dbPath = path.join(dataDir, "harness-bench.db");
 
   const harnessIds = values.harness.split(",").map((s) => s.trim());
+
+  // Warn if ANTHROPIC_API_KEY is missing for claude-code harness
+  if (
+    harnessIds.includes("claude-code") &&
+    !process.env.ANTHROPIC_API_KEY
+  ) {
+    console.warn(
+      "⚠ Warning: ANTHROPIC_API_KEY is not set. Claude Code subprocess will likely hang or fail.",
+    );
+    console.warn(
+      "  Set it with: export ANTHROPIC_API_KEY=sk-ant-...\n",
+    );
+  }
   const timeout = values.timeout ? parseInt(values.timeout, 10) : 300_000;
 
   const allTasks = loadTasks(dataDir);
@@ -62,6 +75,7 @@ export async function run() {
     modelId: values.model,
     timeout,
     env: {},
+    dataDir,
   };
 
   const results = await execute(plan, db, artifactsDir, (progress) => {

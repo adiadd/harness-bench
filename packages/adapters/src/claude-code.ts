@@ -16,12 +16,23 @@ export class ClaudeCodeAdapter implements HarnessAdapter {
   async setup(): Promise<HarnessSetupResult> {
     try {
       const version = await this.getVersion();
+
+      // Pre-flight: verify claude can actually respond (catches missing API key)
+      if (!process.env.ANTHROPIC_API_KEY) {
+        return {
+          ready: false,
+          version,
+          error:
+            "ANTHROPIC_API_KEY is not set. Claude Code subprocesses require this env var (OAuth is not inherited).",
+        };
+      }
+
       return { ready: true, version };
     } catch {
       return {
         ready: false,
         version: "unknown",
-        error: "Claude Code CLI not found",
+        error: "Claude Code CLI not found. Install with: npm install -g @anthropic-ai/claude-code",
       };
     }
   }
@@ -50,14 +61,16 @@ export class ClaudeCodeAdapter implements HarnessAdapter {
       config.model,
       "--output-format",
       "json",
+      "--dangerously-skip-permissions",
+      "--max-turns",
+      "20",
     ];
 
     return new Promise((resolve) => {
       const proc = spawn("claude", args, {
         cwd: config.workspace,
         env: { ...process.env, ...config.env },
-        stdio: ["pipe", "pipe", "pipe"],
-        timeout: config.timeout,
+        stdio: ["ignore", "pipe", "pipe"],
       });
 
       let stdout = "";
@@ -78,6 +91,12 @@ export class ClaudeCodeAdapter implements HarnessAdapter {
 
       proc.on("close", (code) => {
         clearTimeout(timer);
+        // If process failed with empty stdout, include stderr for debugging
+        if (code !== 0 && !stdout.trim() && stderr.trim()) {
+          console.error(
+            `[claude-code] Process exited with code ${code}. stderr: ${stderr.slice(0, 500)}`,
+          );
+        }
         resolve({
           status: code === 0 ? "success" : "failure",
           exitCode: code ?? 1,
@@ -101,14 +120,44 @@ export class ClaudeCodeAdapter implements HarnessAdapter {
   async collectMetrics(artifacts: ExecutionArtifacts): Promise<AdapterMetrics> {
     try {
       const data = JSON.parse(artifacts.stdout);
+
+      // Extract from modelUsage (aggregated across all models used)
+      let tokensInput = 0;
+      let tokensOutput = 0;
+      let tokensCacheWrite = 0;
+      let tokensCacheRead = 0;
+      let costUsd = 0;
+
+      if (data.modelUsage) {
+        for (const model of Object.values(data.modelUsage) as Array<Record<string, number>>) {
+          tokensInput += model.inputTokens ?? 0;
+          tokensOutput += model.outputTokens ?? 0;
+          tokensCacheWrite += model.cacheCreationInputTokens ?? 0;
+          tokensCacheRead += model.cacheReadInputTokens ?? 0;
+          costUsd += model.costUSD ?? 0;
+        }
+      }
+
+      // Fallback to top-level usage if modelUsage missing
+      if (tokensInput === 0 && data.usage) {
+        tokensInput = data.usage.input_tokens ?? 0;
+        tokensOutput = data.usage.output_tokens ?? 0;
+        tokensCacheWrite = data.usage.cache_creation_input_tokens ?? 0;
+        tokensCacheRead = data.usage.cache_read_input_tokens ?? 0;
+      }
+
+      if (costUsd === 0) {
+        costUsd = data.total_cost_usd ?? data.cost_usd ?? 0;
+      }
+
       return {
-        tokensInput: data.usage?.input_tokens ?? 0,
-        tokensOutput: data.usage?.output_tokens ?? 0,
-        tokensCacheWrite: data.usage?.cache_creation_input_tokens,
-        tokensCacheRead: data.usage?.cache_read_input_tokens,
+        tokensInput,
+        tokensOutput,
+        tokensCacheWrite: tokensCacheWrite || undefined,
+        tokensCacheRead: tokensCacheRead || undefined,
         toolCalls: data.num_tool_uses ?? 0,
         turns: data.num_turns ?? 1,
-        costUsd: data.cost_usd ?? 0,
+        costUsd,
       };
     } catch {
       return {

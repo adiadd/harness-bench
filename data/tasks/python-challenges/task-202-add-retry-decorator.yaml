@@ -12,6 +12,8 @@ version: "1.0.0"
 
 context:
   language: python
+  dependencies:
+    pytest: "latest"
   files:
     "retry.py": |
       # Implement the retry decorator here

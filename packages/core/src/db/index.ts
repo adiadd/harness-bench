@@ -1,4 +1,4 @@
-import Database from "better-sqlite3";
+import { Database } from "bun:sqlite";
 import path from "node:path";
 import { type Run, type Result } from "../schemas/index.js";
 
@@ -32,14 +32,14 @@ const MIGRATIONS = [
 ];
 
 export class BenchDB {
-  private db: Database.Database;
+  private db: Database;
 
   constructor(dbPath?: string) {
     const resolvedPath =
       dbPath ?? path.resolve(process.cwd(), "data", "harness-bench.db");
-    this.db = new Database(resolvedPath);
-    this.db.pragma("journal_mode = WAL");
-    this.db.pragma("foreign_keys = ON");
+    this.db = new Database(resolvedPath, { create: true });
+    this.db.exec("PRAGMA journal_mode = WAL");
+    this.db.exec("PRAGMA foreign_keys = ON");
     this.migrate();
   }
 
@@ -106,14 +106,14 @@ export class BenchDB {
   getRun(runId: string): Run | undefined {
     const row = this.db
       .prepare("SELECT data FROM runs WHERE id = ?")
-      .get(runId) as { data: string } | undefined;
+      .get(runId) as { data: string } | null;
     return row ? JSON.parse(row.data) : undefined;
   }
 
   getResult(runId: string): Result | undefined {
     const row = this.db
       .prepare("SELECT data FROM results WHERE run_id = ?")
-      .get(runId) as { data: string } | undefined;
+      .get(runId) as { data: string } | null;
     return row ? JSON.parse(row.data) : undefined;
   }
 

@@ -17,6 +17,7 @@ export const TaskContextSchema = z.object({
   language: z.string(),
   framework: z.array(z.string()).optional(),
   requiredTools: z.array(z.string()).optional(),
+  dependencies: z.record(z.string(), z.string()).optional(),
 });
 
 export const TaskValidationSchema = z.object({

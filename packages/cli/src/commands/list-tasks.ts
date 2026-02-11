@@ -2,7 +2,7 @@ import path from "node:path";
 import { loadTasks, loadSuites } from "@workspace/core/loader";
 
 export function listTasks() {
-  const rootDir = path.resolve(import.meta.dirname, "../../..");
+  const rootDir = path.resolve(import.meta.dirname, "../../../..");
   const dataDir = path.join(rootDir, "data");
   const tasks = loadTasks(dataDir);
   const suites = loadSuites(dataDir);

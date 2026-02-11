@@ -12,7 +12,7 @@ export function results() {
     },
   });
 
-  const rootDir = path.resolve(import.meta.dirname, "../../..");
+  const rootDir = path.resolve(import.meta.dirname, "../../../..");
   const dbPath = path.join(rootDir, "data", "harness-bench.db");
 
   const db = new BenchDB(dbPath);

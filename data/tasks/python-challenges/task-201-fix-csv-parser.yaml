@@ -13,6 +13,8 @@ version: "1.0.0"
 
 context:
   language: python
+  dependencies:
+    pytest: "latest"
   files:
     "csv_parser.py": |
       def parse_csv(text: str) -> list[list[str]]:

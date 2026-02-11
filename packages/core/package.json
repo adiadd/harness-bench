@@ -9,13 +9,11 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "dependencies": {
-    "better-sqlite3": "^11.8.2",
     "zod": "^3.25.76",
     "yaml": "^2.7.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.0",
     "@types/uuid": "^10.0.0",
     "@types/node": "^25.1.0",
     "@workspace/eslint-config": "workspace:*",

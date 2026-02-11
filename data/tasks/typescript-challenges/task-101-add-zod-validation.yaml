@@ -14,6 +14,9 @@ version: "1.0.0"
 context:
   language: typescript
   framework: [nextjs, zod]
+  dependencies:
+    zod: "^3.25"
+    next: "^16.0.0"
   files:
     "app/api/users/route.ts": |
       import { NextRequest, NextResponse } from 'next/server';

@@ -8,6 +8,7 @@ import { getAdapter } from "@workspace/adapters/registry";
 import { type ExecutionConfig } from "@workspace/adapters/types";
 import {
   createWorkspace,
+  injectTestFiles,
   getChangedFiles,
   getDiffOutput,
   getDiffStats,
@@ -20,6 +21,7 @@ export interface RunPlan {
   modelId: string;
   timeout: number;
   env: Record<string, string>;
+  dataDir: string;
 }
 
 export interface RunProgress {
@@ -109,6 +111,9 @@ export async function execute(
       );
       if (diff)
         fs.writeFileSync(path.join(runArtifactsDir, "diff.patch"), diff);
+
+      // Inject test files AFTER harness runs, BEFORE grading
+      injectTestFiles(task, workspace.path, plan.dataDir);
 
       // Grade
       const gradingResult = await grade(task, workspace.path);

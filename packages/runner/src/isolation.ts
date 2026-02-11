@@ -15,7 +15,16 @@ export function createWorkspace(task: Task, runId: string): Workspace {
 
   if (task.context.repoUrl) {
     const cloneArgs = task.context.repoCommit
-      ? ["git", "clone", "--branch", task.context.repoCommit, "--depth", "1", task.context.repoUrl, tmpDir]
+      ? [
+          "git",
+          "clone",
+          "--branch",
+          task.context.repoCommit,
+          "--depth",
+          "1",
+          task.context.repoUrl,
+          tmpDir,
+        ]
       : ["git", "clone", "--depth", "1", task.context.repoUrl, tmpDir];
     execSync(cloneArgs.join(" "), { stdio: "pipe" });
   }
@@ -34,11 +43,20 @@ export function createWorkspace(task: Task, runId: string): Workspace {
   // Initialize git repo if not already one (needed for diff tracking)
   if (!task.context.repoUrl) {
     try {
-      execSync("git init && git add -A && git commit -m 'initial' --allow-empty", {
-        cwd: tmpDir,
-        stdio: "pipe",
-        env: { ...process.env, GIT_AUTHOR_NAME: "bench", GIT_AUTHOR_EMAIL: "bench@test", GIT_COMMITTER_NAME: "bench", GIT_COMMITTER_EMAIL: "bench@test" },
-      });
+      execSync(
+        "git init && git add -A && git commit -m 'initial' --allow-empty",
+        {
+          cwd: tmpDir,
+          stdio: "pipe",
+          env: {
+            ...process.env,
+            GIT_AUTHOR_NAME: "bench",
+            GIT_AUTHOR_EMAIL: "bench@test",
+            GIT_COMMITTER_NAME: "bench",
+            GIT_COMMITTER_EMAIL: "bench@test",
+          },
+        },
+      );
     } catch {
       // Non-critical — diff tracking will return empty
     }
@@ -71,9 +89,9 @@ export function injectTestFiles(
 
   // Find the test file(s) next to the task YAML
   const suiteDir = path.join(dataDir, "tasks", task.suiteId);
-  const candidates = fs.readdirSync(suiteDir).filter(
-    (f) => f.startsWith(task.id) && /\.test\.\w+$/.test(f),
-  );
+  const candidates = fs
+    .readdirSync(suiteDir)
+    .filter((f) => f.startsWith(task.id) && /\.test\.\w+$/.test(f));
 
   for (let i = 0; i < task.validation.testFiles.length; i++) {
     const destRelPath = task.validation.testFiles[i]!;

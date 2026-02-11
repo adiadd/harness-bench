@@ -1,6 +1,7 @@
 import path from "node:path";
 import { parseArgs } from "node:util";
 import { BenchDB } from "@workspace/core/db";
+import { env } from "@workspace/env";
 import { loadTasks } from "@workspace/core/loader";
 import { execute, type RunPlan } from "@workspace/runner/orchestrator";
 
@@ -35,16 +36,11 @@ export async function run() {
   const harnessIds = values.harness.split(",").map((s) => s.trim());
 
   // Warn if ANTHROPIC_API_KEY is missing for claude-code harness
-  if (
-    harnessIds.includes("claude-code") &&
-    !process.env.ANTHROPIC_API_KEY
-  ) {
+  if (harnessIds.includes("claude-code") && !env.ANTHROPIC_API_KEY) {
     console.warn(
       "⚠ Warning: ANTHROPIC_API_KEY is not set. Claude Code subprocess will likely hang or fail.",
     );
-    console.warn(
-      "  Set it with: export ANTHROPIC_API_KEY=sk-ant-...\n",
-    );
+    console.warn("  Set it with: export ANTHROPIC_API_KEY=sk-ant-...\n");
   }
   const timeout = values.timeout ? parseInt(values.timeout, 10) : 300_000;
 

@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
 import { type Task } from "@workspace/core/schemas";
+import { env } from "@workspace/env";
 import {
   type HarnessAdapter,
   type HarnessSetupResult,
@@ -18,7 +19,7 @@ export class ClaudeCodeAdapter implements HarnessAdapter {
       const version = await this.getVersion();
 
       // Pre-flight: verify claude can actually respond (catches missing API key)
-      if (!process.env.ANTHROPIC_API_KEY) {
+      if (!env.ANTHROPIC_API_KEY) {
         return {
           ready: false,
           version,
@@ -32,7 +33,8 @@ export class ClaudeCodeAdapter implements HarnessAdapter {
       return {
         ready: false,
         version: "unknown",
-        error: "Claude Code CLI not found. Install with: npm install -g @anthropic-ai/claude-code",
+        error:
+          "Claude Code CLI not found. Install with: npm install -g @anthropic-ai/claude-code",
       };
     }
   }
@@ -129,7 +131,9 @@ export class ClaudeCodeAdapter implements HarnessAdapter {
       let costUsd = 0;
 
       if (data.modelUsage) {
-        for (const model of Object.values(data.modelUsage) as Array<Record<string, number>>) {
+        for (const model of Object.values(data.modelUsage) as Array<
+          Record<string, number>
+        >) {
           tokensInput += model.inputTokens ?? 0;
           tokensOutput += model.outputTokens ?? 0;
           tokensCacheWrite += model.cacheCreationInputTokens ?? 0;

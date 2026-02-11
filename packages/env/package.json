@@ -1,5 +1,5 @@
 {
-  "name": "@workspace/adapters",
+  "name": "@workspace/env",
   "version": "0.0.0",
   "type": "module",
   "private": true,
@@ -9,8 +9,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "dependencies": {
-    "@workspace/core": "workspace:*",
-    "@workspace/env": "workspace:*"
+    "@t3-oss/env-core": "^0.12.0",
+    "dotenv": "^16.5.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/node": "^25.1.0",
@@ -20,11 +21,6 @@
     "typescript": "^5.9.3"
   },
   "exports": {
-    "./types": "./src/types.ts",
-    "./registry": "./src/registry.ts",
-    "./claude-code": "./src/claude-code.ts",
-    "./aider": "./src/aider.ts",
-    "./kiro": "./src/kiro.ts",
-    "./cursor": "./src/cursor.ts"
+    ".": "./src/index.ts"
   }
 }

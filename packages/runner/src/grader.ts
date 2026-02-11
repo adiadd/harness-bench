@@ -109,9 +109,7 @@ function parseTestOutput(rawOutput: string): {
   }
 
   // Pytest: "X passed, Y failed" or "X passed"
-  const pytestMatch = output.match(
-    /(\d+)\s*passed/i,
-  );
+  const pytestMatch = output.match(/(\d+)\s*passed/i);
   if (pytestMatch) {
     const passed = parseInt(pytestMatch[1]!, 10);
     const pytestFailMatch = output.match(/(\d+)\s*failed/i);
